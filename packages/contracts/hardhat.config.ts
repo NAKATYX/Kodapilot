@@ -62,6 +62,13 @@ const config: HardhatUserConfig = {
     outDir: 'typechain-types',
     target: 'ethers-v6',
   },
+
+  ts: {
+    transpileOnly: true,
+    compilerOptions: {
+      module: 'commonjs',
+    },
+  },
 };
 
 export default config;
