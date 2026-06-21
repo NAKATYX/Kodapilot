@@ -2,9 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    appDir: true,
-  },
   webpack: (config, { isServer }) => {
     // Polyfills for 0G Storage SDK in browser
     if (!isServer) {
