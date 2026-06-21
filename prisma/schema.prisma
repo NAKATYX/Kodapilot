@@ -1,0 +1,237 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== USER & PROFILE =====
+
+model User {
+  id            String    @id @default(cuid())
+  walletAddr    String    @unique
+  role          Role      @default(RESELLER)
+  email         String?
+  verified      Boolean   @default(false)
+  locationGeo   Json?     // { lat, lng } for proximity matching
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  vendorProfile VendorProfile?
+  listings      Listing[]
+  orders        Order[]
+  referrals     Referral[]
+  earnings      EarningEvent[]
+  reputation    ReputationCredit[]
+
+  @@index([walletAddr])
+  @@index([role])
+}
+
+enum Role {
+  RESELLER
+  VENDOR
+  BUYER
+}
+
+model VendorProfile {
+  id                String    @id @default(cuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Reach & delivery
+  reachZones        Json      @default("[]") // [{zone, eta_days, fee}]
+
+  // Trust & verification
+  verificationTier  String?   // KYC, CAC, brand-authorized, etc.
+  counterfeitFlags  Int       @default(0)
+  disputeRate       Float     @default(0)
+
+  // Catalogue
+  catalogueSource   String    @default("manual") // manual|whatsapp|csv|api
+
+  // Stats
+  rating            Float     @default(0)
+  onchainRepRef     String?   // Chain ref for reputation record
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  products          Product[]
+
+  @@index([userId])
+}
+
+// ===== PRODUCTS & INVENTORY =====
+
+model Product {
+  id            String    @id @default(cuid())
+  vendorId      String
+  vendor        VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  title         String
+  description   String?
+  media         String[]  @default([]) // URLs
+  soundTags     String[]  @default([]) // searchable tags
+
+  // Pricing & stock
+  wholesalePrice Int     // in minor units (e.g. kobo)
+  stock         Int      @default(0)
+  stockMode     String   @default("tracked") // tracked|dropship
+
+  // Authenticity
+  authenticityScore Int  @default(0)
+  authTier      String?
+  attestations  Json     @default("[]") // provenance records
+  regulatorReg  String?  // NAFDAC, etc.
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  listings      Listing[]
+
+  @@index([vendorId])
+  @@index([title])
+}
+
+model Listing {
+  id            String    @id @default(cuid())
+  productId     String
+  product       Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  resellerId    String
+  reseller      User      @relation(fields: [resellerId], references: [id], onDelete: Cascade)
+
+  resalePrice   Int       // in minor units
+  margin        Int       // resalePrice - wholesalePrice
+  shareSlug     String    @unique // for attribution link
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  orders        Order[]
+
+  @@index([productId])
+  @@index([resellerId])
+  @@index([shareSlug])
+}
+
+// ===== ORDERS & TRANSACTIONS =====
+
+model Order {
+  id            String    @id @default(cuid())
+  listingId     String
+  listing       Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  buyerId       String
+  buyer         User      @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+
+  resellerId    String?   // may be null for direct purchases
+  amount        Int       // total in minor units
+  deliveryFee   Int       @default(0)
+
+  status        OrderStatus @default(ESCROWED)
+  escrowTx      String?   // chain tx ref
+  deliveryZone  String?
+
+  // Attribution
+  attribution   Json?     // {channel, slug, ts}
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  earnings      EarningEvent[]
+
+  @@index([buyerId])
+  @@index([listingId])
+  @@index([status])
+}
+
+enum OrderStatus {
+  ESCROWED
+  DELIVERED
+  RELEASED
+  REFUNDED
+  DISPUTED
+}
+
+// ===== REFERRALS =====
+
+model Referral {
+  id            String    @id @default(cuid())
+
+  inviterId     String
+  inviter       User      @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+  inviteeId     String
+  invitee       User      @relation(fields: [inviteeId], references: [id], onDelete: Cascade)
+
+  level         Int       @default(1) // one level only
+
+  createdAt     DateTime  @default(now())
+
+  @@unique([inviterId, inviteeId])
+  @@index([inviterId])
+  @@index([inviteeId])
+}
+
+// ===== EARNINGS & LEDGER =====
+
+model EarningEvent {
+  id            String    @id @default(cuid())
+
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type          EarningType
+  amount        Int       // in minor units
+
+  orderId       String?
+  order         Order?    @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  // Trust layer
+  onchainTx     String?   // chain tx hash
+  storageHash   String?   // 0G Storage root hash
+
+  createdAt     DateTime  @default(now())
+
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+enum EarningType {
+  RESALE
+  OVERRIDE
+  LEADERBOARD_BONUS
+}
+
+// ===== REPUTATION =====
+
+model ReputationCredit {
+  id            String    @id @default(cuid())
+
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orderId       String?
+
+  // On-chain & storage
+  onchainRef    String?   // INFT/Agentic ID or on-chain pointer
+  storageHash   String?   // 0G Storage root hash for provenance
+
+  createdAt     DateTime  @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}

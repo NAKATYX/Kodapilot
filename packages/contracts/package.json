@@ -1,0 +1,31 @@
+{
+  "name": "@kodapilot/contracts",
+  "version": "0.1.0",
+  "description": "KodaPilot smart contracts (Hardhat)",
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "deploy:testnet": "hardhat run scripts/deploy.ts --network 0g-testnet",
+    "clean": "hardhat clean"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "@openzeppelin/hardhat-upgrades": "^2.0.5",
+    "@typechain/ethers-v6": "^11.1.0",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/node": "^20.10.0",
+    "hardhat": "^2.19.5",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5",
+    "typechain": "^8.3.2",
+    "typescript": "workspace:*"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "@kodapilot/shared": "workspace:*",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.10.0"
+  }
+}
