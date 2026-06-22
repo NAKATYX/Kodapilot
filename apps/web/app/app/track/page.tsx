@@ -2,18 +2,61 @@
 
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { api } from '@/lib/api'
+import { useStore } from '@/lib/store'
 
-const statuses = ['escrowed', 'in_transit', 'delivered', 'confirmed']
+const statuses = ['ESCROWED', 'IN_TRANSIT', 'DELIVERED', 'RELEASED']
 
 export default function TrackPage() {
-  const [currentStatus, setCurrentStatus] = useState('in_transit')
+  const { currentOrder } = useStore()
+  const [order, setOrder] = useState(currentOrder)
   const [confirming, setConfirming] = useState(false)
+  const [loading, setLoading] = useState(!order)
 
-  const order = {
-    id: 'OD-2024-0847',
+  useEffect(() => {
+    if (order?.id) {
+      const loadOrder = async () => {
+        try {
+          const freshOrder = await api.getOrder(order.id)
+          if (freshOrder) setOrder(freshOrder)
+        } catch (err) {
+          console.error('Failed to load order:', err)
+        } finally {
+          setLoading(false)
+        }
+      }
+      const interval = setInterval(loadOrder, 5000)
+      return () => clearInterval(interval)
+    }
+  }, [order?.id])
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-brand-primary border-t-transparent mb-3"></div>
+          <p className="text-neutral-600 text-sm">loading order...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!order) {
+    return (
+      <Card className="text-center py-8">
+        <div className="text-4xl mb-2">📦</div>
+        <p className="text-neutral-600">no active order</p>
+        <p className="text-sm text-neutral-500 mt-1">make a purchase to track</p>
+      </Card>
+    )
+  }
+
+  const currentStatus = order.status || 'ESCROWED'
+  const mockOrder = {
+    id: order.id,
     product: 'oraimo freepods 4',
-    price: 15900,
+    price: order.price,
     seller: 'Chiamaka U.',
     deliveryDeadline: '2 hours',
     icon: '🎧',
@@ -21,28 +64,28 @@ export default function TrackPage() {
 
   const timelineSteps = [
     {
-      status: 'escrowed',
+      status: 'ESCROWED',
       label: 'payment locked',
       description: 'your money is safe on 0G blockchain',
       time: '2 hours ago',
       icon: '🔒',
     },
     {
-      status: 'in_transit',
+      status: 'IN_TRANSIT',
       label: 'on the way',
       description: 'seller is delivering to your location',
       time: 'right now',
       icon: '🚚',
     },
     {
-      status: 'delivered',
+      status: 'DELIVERED',
       label: 'ready for pickup',
       description: 'item has arrived at your location',
       time: 'not yet',
       icon: '📦',
     },
     {
-      status: 'confirmed',
+      status: 'RELEASED',
       label: 'confirmed received',
       description: 'funds released to seller',
       time: 'pending your action',
@@ -51,11 +94,17 @@ export default function TrackPage() {
   ]
 
   const handleConfirmDelivery = async () => {
-    setConfirming(true)
-    // Simulate confirmation
-    await new Promise(r => setTimeout(r, 1500))
-    setCurrentStatus('confirmed')
-    setConfirming(false)
+    try {
+      setConfirming(true)
+      await api.confirmDelivery(order.id)
+      // Refresh order
+      const freshOrder = await api.getOrder(order.id)
+      if (freshOrder) setOrder(freshOrder)
+    } catch (err) {
+      console.error('Confirmation failed:', err)
+    } finally {
+      setConfirming(false)
+    }
   }
 
   const isCompleted = (status: string) => {
@@ -69,22 +118,22 @@ export default function TrackPage() {
       <Card>
         <div className="flex items-center gap-3 mb-4">
           <div className="w-14 h-14 rounded-lg bg-brand-light flex items-center justify-center text-2xl">
-            {order.icon}
+            {mockOrder.icon}
           </div>
           <div className="flex-1">
-            <div className="font-manrope text-xs text-neutral-500">order {order.id}</div>
-            <div className="font-sora font-black text-lg text-neutral-900">{order.product}</div>
-            <div className="font-manrope text-sm text-brand-primary">₦{order.price.toLocaleString()}</div>
+            <div className="font-manrope text-xs text-neutral-500">order {mockOrder.id}</div>
+            <div className="font-sora font-black text-lg text-neutral-900">{mockOrder.product}</div>
+            <div className="font-manrope text-sm text-brand-primary">₦{mockOrder.price.toLocaleString()}</div>
           </div>
         </div>
         <div className="border-t border-neutral-200 pt-3 flex items-center justify-between">
           <div>
             <div className="font-manrope text-xs text-neutral-500">from</div>
-            <div className="font-manrope font-semibold text-neutral-900">{order.seller}</div>
+            <div className="font-manrope font-semibold text-neutral-900">{mockOrder.seller}</div>
           </div>
           <div className="text-right">
             <div className="font-manrope text-xs text-neutral-500">arrives in</div>
-            <div className="font-sora font-bold text-brand-primary">{order.deliveryDeadline}</div>
+            <div className="font-sora font-bold text-brand-primary">{mockOrder.deliveryDeadline}</div>
           </div>
         </div>
       </Card>
@@ -150,7 +199,7 @@ export default function TrackPage() {
       </div>
 
       {/* Action Button */}
-      {currentStatus === 'delivered' && (
+      {currentStatus === 'DELIVERED' && (
         <Button
           className="w-full"
           variant="primary"
@@ -162,7 +211,7 @@ export default function TrackPage() {
         </Button>
       )}
 
-      {currentStatus === 'confirmed' && (
+      {currentStatus === 'RELEASED' && (
         <Card className="bg-earn-soft border border-earn/50 text-center py-6">
           <div className="text-5xl mb-3">🎉</div>
           <div className="font-sora font-black text-lg text-neutral-900 mb-2">

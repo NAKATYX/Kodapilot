@@ -1,0 +1,72 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: kodapilot
+    - generic [ref=e5]:
+      - generic [ref=e6]: 9:41
+      - img [ref=e7]
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]: total balance
+      - generic [ref=e13]: ₦48,200
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - generic [ref=e17]: resale earnings
+          - generic [ref=e18]: ₦30,100
+        - generic [ref=e19]:
+          - generic [ref=e20]: referral bonus
+          - generic [ref=e21]: ₦18,100
+    - button "withdraw to bank" [ref=e22] [cursor=pointer]:
+      - img [ref=e23]
+      - text: withdraw to bank
+    - generic [ref=e25]:
+      - heading "recent activity" [level=3] [ref=e26]
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: ↓
+            - generic [ref=e31]:
+              - generic [ref=e32]: "resale: oneplus nord ce 3"
+              - generic [ref=e33]: 2 hours ago
+          - generic [ref=e34]: ₦8,500
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]: ↓
+            - generic [ref=e38]:
+              - generic [ref=e39]: "referral: segun sold headphones"
+              - generic [ref=e40]: 5 hours ago
+          - generic [ref=e41]: ₦1,200
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: ↑
+            - generic [ref=e45]:
+              - generic [ref=e46]: withdrawal to bank
+              - generic [ref=e47]: yesterday
+          - generic [ref=e48]: "-₦5,000"
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - generic [ref=e51]: ↓
+            - generic [ref=e52]:
+              - generic [ref=e53]: "resale: samsung airbuds"
+              - generic [ref=e54]: 2 days ago
+          - generic [ref=e55]: ₦4,100
+  - navigation [ref=e56]:
+    - link "🎯 Sell" [ref=e57] [cursor=pointer]:
+      - /url: /app
+      - generic [ref=e58]: 🎯
+      - generic [ref=e59]: Sell
+    - link "📦 Products" [ref=e60] [cursor=pointer]:
+      - /url: /app/products
+      - generic [ref=e61]: 📦
+      - generic [ref=e62]: Products
+    - link "💳 Wallet" [ref=e63] [cursor=pointer]:
+      - /url: /app/wallet
+      - generic [ref=e64]: 💳
+      - generic [ref=e65]: Wallet
+    - link "🏆 Leaderboard" [ref=e66] [cursor=pointer]:
+      - /url: /app/leaderboard
+      - generic [ref=e67]: 🏆
+      - generic [ref=e68]: Leaderboard
+    - link "👤 Profile" [ref=e69] [cursor=pointer]:
+      - /url: /app/profile
+      - generic [ref=e70]: 👤
+      - generic [ref=e71]: Profile

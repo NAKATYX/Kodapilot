@@ -1,0 +1,100 @@
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - generic [ref=e8]: kodapilot
+    - generic [ref=e9]:
+      - link "how it works" [ref=e10] [cursor=pointer]:
+        - /url: "#how"
+      - link "find-it-for-me" [ref=e11] [cursor=pointer]:
+        - /url: "#find"
+      - link "for vendors" [ref=e12] [cursor=pointer]:
+        - /url: "#trust"
+      - link "leaderboard" [ref=e13] [cursor=pointer]:
+        - /url: "#leaderboard"
+    - generic [ref=e14]:
+      - link "sign in" [ref=e15] [cursor=pointer]:
+        - /url: /app
+      - link "start earning" [ref=e16] [cursor=pointer]:
+        - /url: /app
+  - generic [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e21]: your AI copilot for reselling
+      - heading "earn from your phone. the copilot does the work." [level=1] [ref=e22]:
+        - text: earn from your phone.
+        - text: the copilot does the work.
+      - paragraph [ref=e23]: kodapilot finds what sells near you, writes the post, sets a fair price, and keeps every payment safe with escrow. you just share — and the money lands in your wallet.
+      - generic [ref=e24]:
+        - button "connect wallet — it's free" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+          - text: connect wallet — it's free
+        - button "watch 90-sec demo" [ref=e28] [cursor=pointer]:
+          - img [ref=e29]
+          - text: watch 90-sec demo
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: 3 taps
+          - generic [ref=e34]: to a live listing
+        - generic [ref=e36]:
+          - generic [ref=e37]: ₦0
+          - generic [ref=e38]: to start selling
+        - generic [ref=e40]:
+          - generic [ref=e41]: 100%
+          - generic [ref=e42]: escrow-protected
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]: good afternoon
+        - generic [ref=e48]: ₦48,200
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - img [ref=e52]
+          - generic [ref=e54]: copilot picks
+        - generic [ref=e55]:
+          - img [ref=e57]
+          - generic [ref=e60]:
+            - generic [ref=e61]: oraimo freepods 4
+            - generic [ref=e62]: trending in Yaba
+          - generic [ref=e63]:
+            - generic [ref=e64]: you earn
+            - generic [ref=e65]: ₦3,400
+        - generic [ref=e66]: list & share this →
+      - generic [ref=e67]:
+        - img [ref=e69]
+        - generic [ref=e71]:
+          - generic [ref=e72]: anker 20,000mAh
+          - generic [ref=e73]: sells at ₦19,500
+        - generic [ref=e74]: ₦3,100
+      - generic [ref=e75]:
+        - img [ref=e76]
+        - generic [ref=e79]: money locked safe until delivery
+  - generic [ref=e80]:
+    - generic [ref=e81]:
+      - generic [ref=e82]: how earning works
+      - heading "three taps. real money." [level=2] [ref=e83]
+      - paragraph [ref=e84]: no inventory, no upfront cost, no bank account needed. the copilot handles the hard parts.
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - img [ref=e88]
+        - generic [ref=e90]: "01"
+        - heading "copilot picks what sells" [level=3] [ref=e91]
+        - paragraph [ref=e92]: it reads what's moving around you this week and hands you the best products to resell, with the exact margin you'll earn.
+      - generic [ref=e93]:
+        - img [ref=e95]
+        - generic [ref=e97]: "02"
+        - heading "it writes your post" [level=3] [ref=e98]
+        - paragraph [ref=e99]: a ready-to-send caption, a fair price, and a clean flyer — in your voice, in English or Pidgin. edit anything, then share to WhatsApp.
+      - generic [ref=e100]:
+        - img [ref=e102]
+        - generic [ref=e104]: "03"
+        - heading "money lands in your wallet" [level=3] [ref=e105]
+        - paragraph [ref=e106]: when a buyer pays, funds are held safe in escrow. they confirm delivery, you get paid instantly — withdraw anytime.
+  - generic [ref=e108]:
+    - heading "start earning today. it's free." [level=2] [ref=e109]
+    - link "connect wallet →" [ref=e110] [cursor=pointer]:
+      - /url: /app
+  - contentinfo [ref=e111]:
+    - generic [ref=e113]:
+      - generic [ref=e114]:
+        - img [ref=e116]
+        - generic [ref=e118]: kodapilot
+      - generic [ref=e119]: © 2026 KodaPilot. on 0G.

@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto, ProductResponseDto, SuggestProductDto, SuggestResponseDto } from './products.dto';
 import { ethers } from 'ethers';
-import { ComputeClient } from '@kodapilot/zerog';
+// import { ComputeClient } from '@kodapilot/zerog';
 
 @Injectable()
 export class ProductsService {
-  private computeClient: ComputeClient;
+  // private computeClient: ComputeClient;
 
   constructor(private prisma: PrismaService) {
-    const routerUrl = process.env.OG_COMPUTE_ROUTER || 'https://router-api-testnet.integratenetwork.work/v1';
-    const apiKey = process.env.OG_COMPUTE_API_KEY || '';
-    this.computeClient = new ComputeClient(routerUrl, apiKey);
+    // const routerUrl = process.env.OG_COMPUTE_ROUTER || 'https://router-api-testnet.integratenetwork.work/v1';
+    // const apiKey = process.env.OG_COMPUTE_API_KEY || '';
+    // this.computeClient = new ComputeClient(routerUrl, apiKey);
   }
 
   async createProduct(dto: CreateProductDto): Promise<ProductResponseDto> {
@@ -87,36 +87,21 @@ export class ProductsService {
 
   async suggestProducts(dto: SuggestProductDto): Promise<SuggestResponseDto> {
     const budgetEth = Number(dto.budget) / 1e18;
-    const count = dto.count || 3;
 
-    try {
-      const result = await this.computeClient.suggestProduct(dto.category, budgetEth, count);
-      return {
-        products: result.products,
-        proof: result.proof,
-      };
-    } catch (err) {
-      console.error('Error suggesting products:', err);
-      // Return fallback suggestions
-      return {
-        products: [
-          { name: `${dto.category} Item 1`, price: budgetEth * 0.5, margin_bps: 5000 },
-          { name: `${dto.category} Item 2`, price: budgetEth * 0.6, margin_bps: 4000 },
-          { name: `${dto.category} Item 3`, price: budgetEth * 0.7, margin_bps: 3000 },
-        ],
-        proof: 'fallback',
-      };
-    }
+    // MVP: Return fallback suggestions (0G compute integration disabled)
+    return {
+      products: [
+        { name: `${dto.category} Item 1`, price: budgetEth * 0.5, margin_bps: 5000 },
+        { name: `${dto.category} Item 2`, price: budgetEth * 0.6, margin_bps: 4000 },
+        { name: `${dto.category} Item 3`, price: budgetEth * 0.7, margin_bps: 3000 },
+      ],
+      proof: 'mvp-mock',
+    };
   }
 
-  private async generateCopy(productName: string, marginBps: number): Promise<string> {
-    try {
-      const result = await this.computeClient.generateListingCopy(productName, marginBps);
-      return result.copy;
-    } catch (err) {
-      console.error('Error generating copy:', err);
-      return `Premium ${productName} - High margin resale opportunity`;
-    }
+  private async generateCopy(_productName: string, _marginBps: number): Promise<string> {
+    // MVP: Return fallback copy (0G compute integration disabled)
+    return `Premium product - High margin resale opportunity`;
   }
 
   private formatProduct(product: any): ProductResponseDto {

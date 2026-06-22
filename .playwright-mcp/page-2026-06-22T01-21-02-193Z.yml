@@ -1,0 +1,96 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: kodapilot
+    - generic [ref=e5]:
+      - generic [ref=e6]: 9:41
+      - img [ref=e7]
+  - generic [ref=e10]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: 🏆 leaderboard
+        - generic [ref=e15]: top resellers · Yaba
+      - generic [ref=e16]:
+        - generic [ref=e17]: this week
+        - generic [ref=e18]: ₦25,000
+        - generic [ref=e19]: bonus pool
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e23]: 🥇
+        - generic [ref=e24]: B
+        - generic [ref=e25]:
+          - generic [ref=e26]: Blessing E.
+          - generic [ref=e27]: Yaba
+        - generic [ref=e29]: ₦182,400
+      - generic [ref=e30]:
+        - generic [ref=e32]: 🥈
+        - generic [ref=e33]: E
+        - generic [ref=e34]:
+          - generic [ref=e35]: Emeka N.
+          - generic [ref=e36]: Akoka
+        - generic [ref=e38]: ₦164,900
+      - generic [ref=e39]:
+        - generic [ref=e41]: 🥉
+        - generic [ref=e42]: C
+        - generic [ref=e43]:
+          - generic [ref=e44]: Chioma D.
+          - generic [ref=e45]: VI
+        - generic [ref=e47]: ₦158,200
+      - generic [ref=e48]:
+        - generic [ref=e50]: 🎯
+        - generic [ref=e51]: "y"
+        - generic [ref=e52]:
+          - generic [ref=e53]: you (Chiamaka)
+          - generic [ref=e54]: Yaba
+        - generic [ref=e56]: ₦149,640
+      - generic [ref=e57]:
+        - generic [ref=e59]: 5️⃣
+        - generic [ref=e60]: T
+        - generic [ref=e61]:
+          - generic [ref=e62]: Tunde K.
+          - generic [ref=e63]: Surulere
+        - generic [ref=e65]: ₦142,300
+      - generic [ref=e66]:
+        - generic [ref=e68]: 6️⃣
+        - generic [ref=e69]: A
+        - generic [ref=e70]:
+          - generic [ref=e71]: Ada M.
+          - generic [ref=e72]: Lekki
+        - generic [ref=e74]: ₦138,900
+      - generic [ref=e75]:
+        - generic [ref=e77]: 7️⃣
+        - generic [ref=e78]: J
+        - generic [ref=e79]:
+          - generic [ref=e80]: Jamal L.
+          - generic [ref=e81]: Ikeja
+        - generic [ref=e83]: ₦131,200
+      - generic [ref=e84]:
+        - generic [ref=e86]: 8️⃣
+        - generic [ref=e87]: Z
+        - generic [ref=e88]:
+          - generic [ref=e89]: Zainab A.
+          - generic [ref=e90]: Yaba
+        - generic [ref=e92]: ₦127,500
+    - generic [ref=e93]:
+      - generic [ref=e94]: 💡 climb the ranks
+      - paragraph [ref=e95]: earn 5% override on your invites' sales for 90 days. reach top 3 and split the weekly bonus pool.
+  - navigation [ref=e96]:
+    - link "🎯 Sell" [ref=e97] [cursor=pointer]:
+      - /url: /app
+      - generic [ref=e98]: 🎯
+      - generic [ref=e99]: Sell
+    - link "📦 Products" [ref=e100] [cursor=pointer]:
+      - /url: /app/products
+      - generic [ref=e101]: 📦
+      - generic [ref=e102]: Products
+    - link "💳 Wallet" [ref=e103] [cursor=pointer]:
+      - /url: /app/wallet
+      - generic [ref=e104]: 💳
+      - generic [ref=e105]: Wallet
+    - link "🏆 Leaderboard" [ref=e106] [cursor=pointer]:
+      - /url: /app/leaderboard
+      - generic [ref=e107]: 🏆
+      - generic [ref=e108]: Leaderboard
+    - link "👤 Profile" [ref=e109] [cursor=pointer]:
+      - /url: /app/profile
+      - generic [ref=e110]: 👤
+      - generic [ref=e111]: Profile
