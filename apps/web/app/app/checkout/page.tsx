@@ -4,14 +4,10 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { useState } from 'react'
-import { api } from '@/lib/api'
-import { useStore } from '@/lib/store'
 
 export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [isLocked, setIsLocked] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const { setCurrentOrder } = useStore()
 
   const product = {
     name: 'oraimo freepods 4',
@@ -22,30 +18,11 @@ export default function CheckoutPage() {
   }
 
   const handlePay = async () => {
-    try {
-      setIsProcessing(true)
-      setError(null)
-
-      // Create order via API
-      const order = await api.createOrder(
-        '1',
-        '0xbuyer...',
-        '0xvendor...',
-        product.price + 500
-      )
-
-      // Store order in state
-      setCurrentOrder(order)
-
-      // Animate the lock
-      await new Promise(r => setTimeout(r, 1000))
-      setIsLocked(true)
-    } catch (err) {
-      console.error('Payment failed:', err)
-      setError('Payment failed. Please try again.')
-    } finally {
-      setIsProcessing(false)
-    }
+    setIsProcessing(true)
+    // Simulate payment processing with escrow lock animation
+    await new Promise(r => setTimeout(r, 1500))
+    setIsLocked(true)
+    setIsProcessing(false)
   }
 
   return (
@@ -125,13 +102,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </Card>
-
-      {/* Error */}
-      {error && (
-        <Card className="bg-red-50 border border-red-200">
-          <div className="text-red-800 text-sm font-manrope">{error}</div>
-        </Card>
-      )}
 
       {/* Payment State */}
       {isLocked ? (

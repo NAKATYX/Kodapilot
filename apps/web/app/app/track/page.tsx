@@ -2,61 +2,18 @@
 
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { useState, useEffect } from 'react'
-import { api } from '@/lib/api'
-import { useStore } from '@/lib/store'
+import { useState } from 'react'
 
 const statuses = ['ESCROWED', 'IN_TRANSIT', 'DELIVERED', 'RELEASED']
 
 export default function TrackPage() {
-  const { currentOrder } = useStore()
-  const [order, setOrder] = useState(currentOrder)
+  const [currentStatus, setCurrentStatus] = useState<string>('IN_TRANSIT')
   const [confirming, setConfirming] = useState(false)
-  const [loading, setLoading] = useState(!order)
 
-  useEffect(() => {
-    if (order?.id) {
-      const loadOrder = async () => {
-        try {
-          const freshOrder = await api.getOrder(order.id)
-          if (freshOrder) setOrder(freshOrder)
-        } catch (err) {
-          console.error('Failed to load order:', err)
-        } finally {
-          setLoading(false)
-        }
-      }
-      const interval = setInterval(loadOrder, 5000)
-      return () => clearInterval(interval)
-    }
-  }, [order?.id])
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center py-12">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-brand-primary border-t-transparent mb-3"></div>
-          <p className="text-neutral-600 text-sm">loading order...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!order) {
-    return (
-      <Card className="text-center py-8">
-        <div className="text-4xl mb-2">📦</div>
-        <p className="text-neutral-600">no active order</p>
-        <p className="text-sm text-neutral-500 mt-1">make a purchase to track</p>
-      </Card>
-    )
-  }
-
-  const currentStatus = order.status || 'ESCROWED'
-  const mockOrder = {
-    id: order.id,
+  const order = {
+    id: 'OD-2024-0847',
     product: 'oraimo freepods 4',
-    price: order.price,
+    price: 15900,
     seller: 'Chiamaka U.',
     deliveryDeadline: '2 hours',
     icon: '🎧',
@@ -94,17 +51,10 @@ export default function TrackPage() {
   ]
 
   const handleConfirmDelivery = async () => {
-    try {
-      setConfirming(true)
-      await api.confirmDelivery(order.id)
-      // Refresh order
-      const freshOrder = await api.getOrder(order.id)
-      if (freshOrder) setOrder(freshOrder)
-    } catch (err) {
-      console.error('Confirmation failed:', err)
-    } finally {
-      setConfirming(false)
-    }
+    setConfirming(true)
+    await new Promise(r => setTimeout(r, 1000))
+    setCurrentStatus('RELEASED')
+    setConfirming(false)
   }
 
   const isCompleted = (status: string) => {
@@ -115,25 +65,25 @@ export default function TrackPage() {
   return (
     <div className="space-y-6">
       {/* Order Header */}
-      <Card>
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-14 h-14 rounded-lg bg-brand-light flex items-center justify-center text-2xl">
-            {mockOrder.icon}
+      <Card className="bg-gradient-to-br from-neutral-50 to-neutral-100">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-14 h-14 rounded-lg bg-brand-light flex items-center justify-center text-2xl flex-shrink-0">
+            {order.icon}
           </div>
-          <div className="flex-1">
-            <div className="font-manrope text-xs text-neutral-500">order {mockOrder.id}</div>
-            <div className="font-sora font-black text-lg text-neutral-900">{mockOrder.product}</div>
-            <div className="font-manrope text-sm text-brand-primary">₦{mockOrder.price.toLocaleString()}</div>
+          <div className="flex-1 min-w-0">
+            <div className="font-manrope text-xs text-neutral-500">order {order.id}</div>
+            <div className="font-sora font-black text-lg text-neutral-900 line-clamp-1">{order.product}</div>
+            <div className="font-manrope text-sm font-semibold text-brand-primary">₦{order.price.toLocaleString()}</div>
           </div>
         </div>
         <div className="border-t border-neutral-200 pt-3 flex items-center justify-between">
           <div>
-            <div className="font-manrope text-xs text-neutral-500">from</div>
-            <div className="font-manrope font-semibold text-neutral-900">{mockOrder.seller}</div>
+            <div className="font-manrope text-xs text-neutral-500">from seller</div>
+            <div className="font-manrope font-semibold text-neutral-900">{order.seller}</div>
           </div>
           <div className="text-right">
             <div className="font-manrope text-xs text-neutral-500">arrives in</div>
-            <div className="font-sora font-bold text-brand-primary">{mockOrder.deliveryDeadline}</div>
+            <div className="font-sora font-bold text-brand-primary">{order.deliveryDeadline}</div>
           </div>
         </div>
       </Card>
