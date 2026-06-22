@@ -26,7 +26,8 @@ model User {
   vendorProfile VendorProfile?
   listings      Listing[]
   orders        Order[]
-  referrals     Referral[]
+  invitedUsers  Referral[]      @relation("InviterReferrals")
+  inviters      Referral[]      @relation("InviteeReferrals")
   earnings      EarningEvent[]
   reputation    ReputationCredit[]
 
@@ -171,10 +172,10 @@ model Referral {
   id            String    @id @default(cuid())
 
   inviterId     String
-  inviter       User      @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+  inviter       User      @relation("InviterReferrals", fields: [inviterId], references: [id], onDelete: Cascade)
 
   inviteeId     String
-  invitee       User      @relation(fields: [inviteeId], references: [id], onDelete: Cascade)
+  invitee       User      @relation("InviteeReferrals", fields: [inviteeId], references: [id], onDelete: Cascade)
 
   level         Int       @default(1) // one level only
 
