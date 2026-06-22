@@ -26,18 +26,18 @@ export function BottomNav() {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 flex items-center justify-around py-2 z-40">
+    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-white border-t border-neutral-200 flex items-center justify-around py-2 z-40">
       {navItems.map((item) => (
         <Link
           key={item.href}
           href={item.href}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition ${
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition text-center ${
             isActive(item.path)
               ? 'text-brand-primary'
               : 'text-neutral-500 hover:text-neutral-700'
           }`}
         >
-          <span className="text-2xl">{item.icon}</span>
+          <span className="text-2xl leading-none">{item.icon}</span>
           <span className="font-manrope text-xs font-semibold">{item.label}</span>
         </Link>
       ))}
