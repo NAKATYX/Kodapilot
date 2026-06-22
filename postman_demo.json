@@ -1,0 +1,210 @@
+{
+  "info": {
+    "name": "KodaPilot Demo - End-to-End Flow",
+    "description": "Full demo sequence: Create product → List → Create order → Confirm → Release",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"iPhone 15 Pro\",\n  \"price\": \"1000000000000000000\",\n  \"category\": \"electronics\",\n  \"description\": \"Latest iPhone with AI features and faster processor\",\n  \"vendorId\": \"0x1234567890123456789012345678901234567890\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/products",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["products"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. List Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/products",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["products"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Get Product by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/products/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["products", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Create Order (Deposit Escrow)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"buyer\": \"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"vendor\": \"0x1234567890123456789012345678901234567890\",\n  \"reseller\": \"0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\n  \"amount\": \"1000000000000000000\",\n  \"productId\": \"test-product-1\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/orders",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get Order",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/orders/{{orderId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["orders", "{{orderId}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Confirm Delivery",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"buyer\": \"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/orders/{{orderId}}/confirm-delivery",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["orders", "{{orderId}}", "confirm-delivery"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Release Escrow",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"buyer\": \"0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/orders/{{orderId}}/release",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["orders", "{{orderId}}", "release"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Fraud Check",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"vendor\": \"0x1234567890123456789012345678901234567890\",\n  \"amount\": \"1000000000000000000\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/fraud/check",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["fraud", "check"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. List Orders by Buyer",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/orders/buyer/0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["orders", "buyer", "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. List Orders by Vendor",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/orders/vendor/0x1234567890123456789012345678901234567890",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["orders", "vendor", "0x1234567890123456789012345678901234567890"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "orderId",
+      "value": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    }
+  ]
+}
