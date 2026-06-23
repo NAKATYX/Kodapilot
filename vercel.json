@@ -1,4 +1,0 @@
-{
-  "buildCommand": "pnpm --filter=@kodapilot/web --filter=@kodapilot/api run build",
-  "outputDirectory": "apps/web/.next"
-}
