@@ -1,5 +1,5 @@
 {
   "installCommand": "npx -y pnpm@9.0.6 install --filter=@kodapilot/web --filter=@kodapilot/shared --filter=@kodapilot/api",
   "buildCommand": "pnpm build && node copy-build.cjs",
-  "outputDirectory": ".next"
+  "outputDirectory": "public"
 }
