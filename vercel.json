@@ -1,5 +1,5 @@
 {
-  "installCommand": "npm i -g pnpm@8.15.0 && pnpm install",
+  "installCommand": "npm i -g pnpm@8.15.0 && rm -rf node_modules/.pnpm && pnpm install --filter=@kodapilot/web --filter=@kodapilot/shared --filter=@kodapilot/api",
   "buildCommand": "pnpm build",
   "outputDirectory": "apps/web/.next"
 }
