@@ -3,7 +3,7 @@ import { parse } from 'url';
 import next from 'next';
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev, dir: '.' });
+const app = next({ dev, dir: './apps/web' });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
