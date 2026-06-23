@@ -8,6 +8,7 @@
     "dev": "pnpm -r --parallel run dev",
     "build": "pnpm --filter=@kodapilot/shared --filter=@kodapilot/web --filter=@kodapilot/api run build",
     "build:all": "pnpm -r run build",
+    "start": "node server.js",
     "test": "pnpm -r run test",
     "lint": "pnpm -r run lint",
     "format": "prettier --write .",
