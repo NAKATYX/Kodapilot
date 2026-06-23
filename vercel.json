@@ -1,0 +1,4 @@
+{
+  "installCommand": "npm ci && npx pnpm install",
+  "buildCommand": "npm run build"
+}
