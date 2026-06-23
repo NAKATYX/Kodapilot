@@ -1,4 +1,16 @@
 {
   "buildCommand": "pnpm build",
-  "installCommand": "npx -y pnpm@9.0.6 install --filter=@kodapilot/web --filter=@kodapilot/shared --filter=@kodapilot/api"
+  "installCommand": "pnpm install",
+  "builds": [
+    {
+      "src": "apps/web",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "apps/web/$1"
+    }
+  ]
 }
