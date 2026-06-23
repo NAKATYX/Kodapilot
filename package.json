@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm -r --parallel run dev",
-    "build": "pnpm -r run build",
+    "build": "pnpm --filter=@kodapilot/shared --filter=@kodapilot/web --filter=@kodapilot/api run build",
+    "build:all": "pnpm -r run build",
     "test": "pnpm -r run test",
     "lint": "pnpm -r run lint",
     "format": "prettier --write .",
