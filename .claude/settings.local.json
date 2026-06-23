@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'fix: move vercel.json to apps/web - remove invalid rootDirectory *)",
+      "Bash(git push *)"
     ]
   }
 }
