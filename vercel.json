@@ -1,5 +1,5 @@
 {
   "buildCommand": "pnpm --filter=@kodapilot/shared --filter=@kodapilot/web --filter=@kodapilot/api run build",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --filter=@kodapilot/web --filter=@kodapilot/shared --filter=@kodapilot/api",
   "outputDirectory": "apps/web/.next"
 }
